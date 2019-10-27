@@ -1,4 +1,4 @@
-import {min, orderBy} from 'lodash';
+import {min, orderBy, isEmpty} from 'lodash';
 import {IGradesSchema} from "../models/grades";
 import {dbCollection} from "../models";
 import {GradesUtil} from "../utils/grades.util";
@@ -6,9 +6,14 @@ import {GradesUtil} from "../utils/grades.util";
 export class HomeRepository {
 
     public async saveQuarterAndGrades(value: string) {
+        if (!value) {
+            throw Error('No value inputted. Please input a value!');
+        }
+
         const [quarter, ...studentGrades] = value.split('\n');
-        if (!quarter && !studentGrades) {
-            throw Error('Text is invalid');
+
+        if (isEmpty(studentGrades)) {
+            throw Error('No students found! Please input the student names and their respective grades.');
         }
 
         // Process saving quarter and student grades

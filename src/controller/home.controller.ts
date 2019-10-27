@@ -1,7 +1,5 @@
 import {Request, Response} from 'express';
-import * as readline from 'readline';
 import {HomeRepository} from "../repository/home.repository";
-import {dbCollection} from "../models";
 
 export class HomeController {
     private homeRepo = new HomeRepository();
@@ -13,7 +11,7 @@ export class HomeController {
             res.status(200).end();
         } catch (err) {
             console.error(`[HomeController.enterGradesByText]: ${err.name} : ${err.message}`);
-            res.status(400).json('Error. Please try again.');
+            res.status(400).json(err.message);
         }
     }
 
@@ -25,7 +23,7 @@ export class HomeController {
             res.status(200).end();
         } catch (err) {
             console.error(`[HomeController.enterGradesByFile]: ${err.name} : ${err.message}`);
-            res.status(400).json('Error. Please try again.');
+            res.status(400).json(err.message);
         }
     };
 
